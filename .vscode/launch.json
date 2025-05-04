@@ -10,7 +10,7 @@
             "openViews": ["LED Matrix"],
             "ledMatrixSize": {
                 "x": 11,
-                "y": 11
+                "y": 1
             }
         }
     ]
