@@ -1,40 +1,41 @@
-    .data
+.data
 #===========================================================
 # Data Section - Array and constants
 #===========================================================
-# Test array of color values
+# Test array of color values (format: 0xAARRGGBB)
+# AA = Alpha (transparency), RR = Red, GG = Green, BB = Blue
     arr:
-    .word     0x000099FF               # Color values in format 0xAARRGGBB
-    .word     0x0099FFFF
-    .word     0x000000DD
-    .word     0x0011FFFF
-    .word     0x0055FFFF
-    .word     0x00DDFFFF
-    .word     0x000011FF
-    .word     0x0000DDFF
-    .word     0x00000055
-    .word     0x00000099
-    .word     0x000055FF
+    .word     0x000099FF               # Blue with light red
+    .word     0x0099FFFF               # Cyan
+    .word     0x000000DD               # Dark blue
+    .word     0x0011FFFF               # Bright cyan
+    .word     0x0055FFFF               # Light cyan
+    .word     0x00DDFFFF               # Bright cyan with red tint
+    .word     0x000011FF               # Medium blue
+    .word     0x0000DDFF               # Bright blue
+    .word     0x00000055               # Very dark blue
+    .word     0x00000099               # Dark blue
+    .word     0x000055FF               # Medium blue with red tint
 
-# Backup copy of original array for resets
+# Backup copy of original array for resets - same color values as above
     arr_backup:
-    .word     0x000099FF
-    .word     0x0099FFFF
-    .word     0x000000DD
-    .word     0x0011FFFF
-    .word     0x0055FFFF
-    .word     0x00DDFFFF
-    .word     0x000011FF
-    .word     0x0000DDFF
-    .word     0x00000055
-    .word     0x00000099
-    .word     0x000055FF
+    .word     0x000099FF               # Blue with light red
+    .word     0x0099FFFF               # Cyan
+    .word     0x000000DD               # Dark blue
+    .word     0x0011FFFF               # Bright cyan
+    .word     0x0055FFFF               # Light cyan
+    .word     0x00DDFFFF               # Bright cyan with red tint
+    .word     0x000011FF               # Medium blue
+    .word     0x0000DDFF               # Bright blue
+    .word     0x00000055               # Very dark blue
+    .word     0x00000099               # Dark blue
+    .word     0x000055FF               # Medium blue with red tint
 
 # Array size
     arr_size:
-    .word     11
+    .word     11                       # Number of elements in array
 
-# String constants
+# String constants for output formatting
     newline:
     .asciiz   "\n"
     count_msg:
@@ -51,6 +52,8 @@
     .asciiz   "Quick Sort: "
     shuffle_msg:
     .asciiz   "Shuffling array...\n"
+    sorting_msg:
+    .asciiz   "Sorting array...\n"
 
 # Performance counters
     instruction_count:
@@ -140,6 +143,11 @@
     li        a3, 1000                 # Longer delay for visibility
     jal       ra, delay                # Pause to see shuffled array
 
+# Display "sorting array" message
+    li        a0, 4                    # Print string ecall
+    la        a1, sorting_msg          # Load message string
+    ecall
+
 # Reset instruction counter
     la        t0, instruction_count
     sw        zero, 0(t0)              # Reset counter to 0
@@ -183,6 +191,15 @@
 # Display shuffled array
     jal       ra, display_array        # Display shuffled array
 
+# Add a delay after shuffling
+    li        a3, 1000                 # Longer delay for visibility
+    jal       ra, delay                # Pause to see shuffled array
+
+# Display "sorting array" message
+    li        a0, 4                    # Print string ecall
+    la        a1, sorting_msg          # Load message string
+    ecall
+
 # Reset instruction counter
     la        t0, instruction_count
     sw        zero, 0(t0)              # Reset counter to 0
@@ -225,6 +242,15 @@
     jal       ra, shuffle_array        # Shuffle array
     jal       ra, display_array        # Display shuffled array
 
+# Add a delay after shuffling
+    li        a3, 1000                 # Longer delay for visibility
+    jal       ra, delay                # Pause to see shuffled array
+
+# Display "sorting array" message
+    li        a0, 4                    # Print string ecall
+    la        a1, sorting_msg          # Load message string
+    ecall
+
 # Reset instruction counter
     la        t0, instruction_count
     sw        zero, 0(t0)              # Reset counter to 0
@@ -266,6 +292,15 @@
     jal       ra, reset_array          # Reset array to original values
     jal       ra, shuffle_array        # Shuffle array
     jal       ra, display_array        # Display shuffled array
+
+# Add a delay after shuffling
+    li        a3, 1000                 # Longer delay for visibility
+    jal       ra, delay                # Pause to see shuffled array
+
+# Display "sorting array" message
+    li        a0, 4                    # Print string ecall
+    la        a1, sorting_msg          # Load message string
+    ecall
 
 # Reset instruction counter
     la        t0, instruction_count
